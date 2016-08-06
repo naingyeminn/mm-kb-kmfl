@@ -1,0 +1,163 @@
+VERSION 5.0
+NAME "Shan"
+
+BITMAP Shan.bmp
+
+
+begin Unicode > use(Main)
+
+ store(baseK)   'qweQWErR' \
+                'tyuiop' \
+                'YUIOP' \
+                "zxcCvbn" \
+                "ZXVN"
+                
+ store(baseU)   U+1078 U+1010 U+107C U+AA61 U+107B U+A9E3 U+1019 U+109E \
+                U+1022 U+1015 U+1075 U+1004 U+101D U+1081 \
+                U+107F U+1077 U+101B U+101E U+1080 \
+                U+107D U+1011 U+1076 U+A9E0 U+101C U+101A U+107A \
+                U+107E U+AA6A U+AA6E U+109F
+               
+                 
+store(addK) ',.<>K'
+store(addU) U+002C U+002E U+104A U+104B U+A9E6
+             
+store(numK)     '1234567890' 
+store(numU)     U+1091 U+1092 U+1093 U+1094 U+1095 \
+                U+1096 U+1097 U+1098 U+1099 U+1090  
+
+store(bnumK)     '!@#$%^&*()'
+store(bnumU)	U+1041 U+1042 U+1043 U+1044 U+1045 \
+                U+1046 U+1047 U+1048 U+1049 U+1040               
+                
+store(aftereK)  'mMjhH:;L'
+store(aftereU)  U+1062 U+1083 U+1087 U+1089 U+1037 U+1038 U+1088 U+108A
+
+store (aaK)     'mM'
+store (aaU)     U+1062 U+1083 
+
+store (lDotK)   'jhH'
+store (lDotU)   U+1087 U+1089 U+1037    
+
+store (visargaK) ';:L'
+store (visargaU) U+1038 U+1088 U+108A
+                      
+store(udia1K)    'dDAS'
+store(udia1U)    U+102D U+102E U+1035 U+1085 
+
+store(udia2K)   'J'     
+store(udia2U)   U+1086
+                  
+store(ldiaK)    'kl'
+store(ldiaU)    U+102F U+1030
+
+store(asatK) 'f'
+store(asatU) U+103A 
+
+store(consU)    U+1075 U+1076 U+1077 U+1004 U+1078 U+101E \
+    U+107A U+1079 U+1010 U+1011 U+107B U+107C \
+    U+1015 U+107D U+107E U+107F U+1019 U+101A \
+    U+101B U+101C U+101D U+1080 U+1081 U+1022
+
+
+store(mediaK)     'BTgG' 
+store(mediaU)     U+103B U+103C U+103D U+1082 
+
+store(yDiaK)    'B'
+store(yDiaU)    U+103B
+
+store(rDiaK)    'T'
+store(rDiaU)    U+103C
+   
+store(wDiaK)    'gG'
+store(wDiaU)    U+103D U+1082 
+
+store(filler)   U+200B   
+
+store(vowelEK)  'a'
+store(vowelEU)  U+1031
+
+store(vowelSEK) 's'
+store(vowelSEU) U+1084
+
+store(wakillerK)   'F'
+
+store(stackU)   U+1039
+
+store(base2K)	'qwWoOzxX'
+store(base2U)	U+1079 U+AA66 U+AA68 U+A9E1 U+A9E2 U+A9E4 U+AA67 U+AA69
+
+store(kinziU)   U+1004
+
+group(Main) using keys 
++ any(vowelEK) > outs(filler) outs(vowelEU)
++ any(vowelSEK) > outs(filler) outs(vowelSEU)
+
+any(filler) U+1031 + any(baseK) > index(baseU, 3) U+1031
+any(filler) U+1084 + any(baseK) > index(baseU, 3) U+1084
+any(filler) U+1084 '`' + any(base2K) > index(base2U, 4) U+1084
+U+1031 U+1039 + any(baseK) > U+1039 index(baseU, 3) U+1031 
+U+1084 U+1039 + any(baseK) > U+1039 index(baseU, 3) U+1084
+U+1084 U+1039 '`' + any(base2K) > U+1039 index(base2U, 4) U+1084
+U+1031 + any(mediaK) > index(mediaU, 2) U+1031
+U+1084 + any(mediaK) > index(mediaU, 2) U+1084
+
++ any(addK)> index(addU, 1)
+'`' + any(numK) > index(numU, 2)
+'`' + any(bnumK) > index(bnumU, 2)
++ any(baseK) > index(baseU, 1) 
++ any(aftereK) > index(aftereU, 1) 
++ any(asatK) > outs(asatU)          
+
+'`' + any(base2K) > index(base2U, 2)
+'`' + 'f' > outs(stackU)
+'`' + 's' > U+A9E5
+
++ any(wakillerK) > U+1082 U+103A
+
+U+101E U+103C U+1031 U+102C + any(asatK) > U+102A
+U+1025 + 'D' > U+1026  
+any(ldiaU) + any(udia1K) > index(udia1U, 2) context 
+any(udia2U) + any(ldiaK)> index(ldiaU, 2) context
+any(udia2U) + any(udia1K)> index(udia1U, 2) context
+U+1037 + any(udia1K) > index(udia1U, 2) context  
+U+1037 + any(udia2K) > index(udia2U, 2) context  
+U+1037 + any(ldiaK) > index(ldiaU, 2) context
+
+U+1037 + any(aaK) > index(aaU, 2) context            
+U+1038 + any(lDotK) > index(lDotU, 2) context 
+U+1037 + any(asatK)> index(asatU,2) U+1037
+
+
++ any(ldiaK) > index(ldiaU, 1)
++ any(udia1K) > index(udia1U, 1)  
++ any(udia2K) > index(udia2U, 1)
+ 
+
+any(wDiaU) + any(yDiaK) > index(yDiaU, 2) context
+any(wDiaU) + any(rDiaK) > index(rDiaU, 2) context
+
+any(wDiaU) U+1031 + any(yDiaK) > index(yDiaU, 3) context
+any(wDiaU) U+1031 + any(rDiaK) > index(rDiaU, 3) context
+any(wDiaU) U+1084 + any(yDiaK) > index(yDiaU, 3) context
+any(wDiaU) U+1084 + any(rDiaK) > index(rDiaU, 3) context 
+
++ any(mediaK) > index(mediaU, 1)
+
+any(kinziU) U+103A U+1039 any(consU) + [K_BKSP] > index(consU, 4)
+any(kinziU) U+103A U+1039 any(consU) U+1031 +  [K_BKSP] > index(consU, 4) U+1031
+any(kinziU) U+103A U+1039 any(consU) any(mediaU) + [K_BKSP] > index(consU, 4) index(mediaU, 5) 
+
+U+200B U+1031 + [K_BKSP] > nul
+U+200B U+1084 + [K_BKSP] > nul
+any(baseU) U+1031 + [K_BKSP] > outs(filler) U+1031 
+any(mediaU) U+1031 + [K_BKSP]> U+1031
+
+any(baseU) U+1084 + [K_BKSP] > outs(filler) U+1084 
+any(base2U) U+1084 + [K_BKSP] > outs(filler) U+1084
+any(mediaU) U+1084 + [K_BKSP]> U+1084
+
+U+1039 any(consU) U+1031 + [K_BKSP] > U+1039 outs(filler) U+1031
+U+1039 any(consU) + [K_BKSP] > nul
+
+U+1039 any(consU) U+1084 + [K_BKSP] > U+1039 outs(filler) U+1084
